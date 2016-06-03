@@ -107,14 +107,26 @@ NSArray *habitArray;
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"Action" sender:indexPath];
 }
-*/
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+//
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"Action"])
+    {
+        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+        NSLog(@"%ld",(long)indexPath.row);
+        ViewController *destViewController = segue.destinationViewController;
+
+        Habit *habitToPass = habitArray[indexPath.row];
+        destViewController.habitPassed = habitToPass;
+    }
+}
 
 @end
